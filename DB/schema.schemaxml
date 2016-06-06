@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemadesigner version="6.5">
+<source>
+<database charset="latin1" collation="latin1_swedish_ci">sim_blcc_penyisihan</database>
+</source>
+<canvas zoom="100">
+<tables>
+<table name="sbc_admin" view="colnames">
+<left>351</left>
+<top>477</top>
+<width>163</width>
+<height>163</height>
+<sql_create_table>CREATE TABLE `sbc_admin` (
+  `id_admin` tinyint(2) NOT NULL AUTO_INCREMENT,
+  `nama_admin` varchar(25) DEFAULT NULL,
+  `username_admin` varchar(10) DEFAULT NULL,
+  `password_admin` varchar(32) DEFAULT NULL,
+  `time_created_admin` datetime DEFAULT NULL,
+  PRIMARY KEY (`id_admin`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="sbc_biodata_peserta" view="colnames">
+<left>15</left>
+<top>17</top>
+<width>203</width>
+<height>282</height>
+<sql_create_table>CREATE TABLE `sbc_biodata_peserta` (
+  `id_peserta` varchar(11) NOT NULL,
+  `nama_peserta` varchar(75) DEFAULT NULL,
+  `tempat_lahir_peserta` varchar(25) DEFAULT NULL,
+  `tanggal_lahir_peserta` date DEFAULT NULL,
+  `email_peserta` varchar(20) DEFAULT NULL,
+  `alamat_peserta` varchar(100) DEFAULT NULL,
+  `nomor_telp_peserta` varchar(14) DEFAULT NULL,
+  `sekolah_peserta` varchar(25) DEFAULT NULL,
+  `password_peserta` varchar(32) DEFAULT NULL,
+  `foto_peserta` blob,
+  `id_tingkat_sekolah_peserta` tinyint(2) DEFAULT NULL,
+  `id_rayon_peserta` int(3) DEFAULT NULL,
+  PRIMARY KEY (`id_peserta`),
+  KEY `FK_tingkat_sekoalh_peserta` (`id_tingkat_sekolah_peserta`),
+  KEY `FK_rayon_peserta` (`id_rayon_peserta`),
+  CONSTRAINT `FK_rayon_peserta` FOREIGN KEY (`id_rayon_peserta`) REFERENCES `sbc_rayon` (`id_rayon`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_tingkat_sekoalh_peserta` FOREIGN KEY (`id_tingkat_sekolah_peserta`) REFERENCES `sbc_tingkat_sekolah` (`id_tingkat_sekolah`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="sbc_jawaban" view="colnames">
+<left>811</left>
+<top>47</top>
+<width>145</width>
+<height>163</height>
+<sql_create_table>CREATE TABLE `sbc_jawaban` (
+  `id_jawaban` int(11) NOT NULL AUTO_INCREMENT,
+  `id_soal_jawaban` int(11) DEFAULT NULL,
+  `teks_jawaban` text,
+  `gambar_jawaban` blob,
+  `benar_jawaban` int(1) DEFAULT NULL,
+  PRIMARY KEY (`id_jawaban`),
+  KEY `FK_soal_jawaban` (`id_soal_jawaban`),
+  CONSTRAINT `FK_soal_jawaban` FOREIGN KEY (`id_soal_jawaban`) REFERENCES `sbc_soal` (`id_soal`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="sbc_jawaban_peserta_tmp" view="colnames">
+<left>579</left>
+<top>36</top>
+<width>190</width>
+<height>146</height>
+<sql_create_table>CREATE TABLE `sbc_jawaban_peserta_tmp` (
+  `id_jawaban_peserta_tmp` int(11) NOT NULL AUTO_INCREMENT,
+  `id_jawaban` int(11) DEFAULT NULL,
+  `id_peserta` varchar(11) DEFAULT NULL,
+  `jawaban_peserta` int(1) DEFAULT NULL,
+  PRIMARY KEY (`id_jawaban_peserta_tmp`),
+  KEY `FK_jawaban_yang_didapat_peserta` (`id_jawaban`),
+  KEY `FK_jawaban_peserta` (`id_peserta`),
+  CONSTRAINT `FK_jawaban_peserta` FOREIGN KEY (`id_peserta`) REFERENCES `sbc_lomba_peserta` (`id_peserta`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_jawaban_yang_didapat_peserta` FOREIGN KEY (`id_jawaban`) REFERENCES `sbc_jawaban` (`id_jawaban`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="sbc_log_aktivitas" view="colnames">
+<left>724</left>
+<top>474</top>
+<width>153</width>
+<height>146</height>
+<sql_create_table>CREATE TABLE `sbc_log_aktivitas` (
+  `id_aktivitas` int(11) NOT NULL AUTO_INCREMENT,
+  `id_admin_aktivitas` tinyint(2) DEFAULT NULL,
+  `nama_aktivitas` varchar(100) DEFAULT NULL,
+  `time_aktivitas` datetime DEFAULT NULL,
+  PRIMARY KEY (`id_aktivitas`),
+  KEY `FK_aktivitas_admin` (`id_admin_aktivitas`),
+  CONSTRAINT `FK_aktivitas_admin` FOREIGN KEY (`id_admin_aktivitas`) REFERENCES `sbc_admin` (`id_admin`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="sbc_lomba_peserta" view="colnames">
+<left>284</left>
+<top>21</top>
+<width>250</width>
+<height>248</height>
+<sql_create_table>CREATE TABLE `sbc_lomba_peserta` (
+  `id_peserta` varchar(11) NOT NULL,
+  `verifikasi_peserta` int(1) DEFAULT NULL,
+  `ikuti_lomba_peserta` int(1) DEFAULT NULL,
+  `berkas_struk_pembayaran_peserta` blob,
+  `berkas_biodata_ttd_peserta` blob,
+  `waktu_mulai_peserta` datetime DEFAULT NULL,
+  `waktu_selesai_peserta` datetime DEFAULT NULL,
+  `nilai_benar_jawab_peserta` int(3) DEFAULT NULL,
+  `nilai_salah_jawab_peserta` int(3) DEFAULT NULL,
+  `nilai_tidak_jawab_peserta` int(3) DEFAULT NULL,
+  PRIMARY KEY (`id_peserta`),
+  CONSTRAINT `FK_sbc_lomba_peserta` FOREIGN KEY (`id_peserta`) REFERENCES `sbc_biodata_peserta` (`id_peserta`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="sbc_pengumuman" view="colnames">
+<left>66</left>
+<top>487</top>
+<width>159</width>
+<height>163</height>
+<sql_create_table>CREATE TABLE `sbc_pengumuman` (
+  `id_pengumuman` int(4) NOT NULL AUTO_INCREMENT,
+  `id_admin` tinyint(2) DEFAULT NULL,
+  `judul_pengumuman` varchar(120) DEFAULT NULL,
+  `teks_pengumuman` text,
+  `time_created` datetime DEFAULT NULL,
+  PRIMARY KEY (`id_pengumuman`),
+  KEY `FK_pengumuman_admin` (`id_admin`),
+  CONSTRAINT `FK_pengumuman_admin` FOREIGN KEY (`id_admin`) REFERENCES `sbc_admin` (`id_admin`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="sbc_rayon" view="colnames">
+<left>313</left>
+<top>302</top>
+<width>146</width>
+<height>129</height>
+<sql_create_table>CREATE TABLE `sbc_rayon` (
+  `id_rayon` int(3) NOT NULL AUTO_INCREMENT,
+  `nomor_rayon` tinyint(2) DEFAULT NULL,
+  `kabupaten_rayon` varchar(30) DEFAULT NULL,
+  PRIMARY KEY (`id_rayon`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="sbc_setting" view="colnames">
+<left>46</left>
+<top>340</top>
+<width>122</width>
+<height>129</height>
+<sql_create_table>CREATE TABLE `sbc_setting` (
+  `id_setting` int(11) NOT NULL AUTO_INCREMENT,
+  `attr_setting` varchar(100) DEFAULT NULL,
+  `value_setting` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id_setting`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="sbc_soal" view="colnames">
+<left>794</left>
+<top>251</top>
+<width>183</width>
+<height>163</height>
+<sql_create_table>CREATE TABLE `sbc_soal` (
+  `id_soal` int(11) NOT NULL AUTO_INCREMENT,
+  `teks_soal` text,
+  `gambar_soal` blob,
+  `dummy_soal` int(1) DEFAULT NULL,
+  `id_tingkat_sekolah_soal` tinyint(2) DEFAULT NULL,
+  PRIMARY KEY (`id_soal`),
+  KEY `FK_tingkatan_sekolah_soal` (`id_tingkat_sekolah_soal`),
+  CONSTRAINT `FK_tingkatan_sekolah_soal` FOREIGN KEY (`id_tingkat_sekolah_soal`) REFERENCES `sbc_tingkat_sekolah` (`id_tingkat_sekolah`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="sbc_soal_peserta_tmp" view="colnames">
+<left>585</left>
+<top>209</top>
+<width>165</width>
+<height>129</height>
+<sql_create_table>CREATE TABLE `sbc_soal_peserta_tmp` (
+  `id_soal_peserta_tmp` int(11) NOT NULL AUTO_INCREMENT,
+  `id_soal` int(11) DEFAULT NULL,
+  `id_peserta` varchar(11) DEFAULT NULL,
+  PRIMARY KEY (`id_soal_peserta_tmp`),
+  KEY `FK_soal_yang_didapat_peserta` (`id_soal`),
+  KEY `FK_soal_peserta` (`id_peserta`),
+  CONSTRAINT `FK_soal_peserta` FOREIGN KEY (`id_peserta`) REFERENCES `sbc_lomba_peserta` (`id_peserta`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_soal_yang_didapat_peserta` FOREIGN KEY (`id_soal`) REFERENCES `sbc_soal` (`id_soal`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="sbc_tingkat_sekolah" view="colnames">
+<left>527</left>
+<top>347</top>
+<width>175</width>
+<height>112</height>
+<sql_create_table>CREATE TABLE `sbc_tingkat_sekolah` (
+  `id_tingkat_sekolah` tinyint(2) NOT NULL AUTO_INCREMENT,
+  `nama_tingkat_sekolah` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`id_tingkat_sekolah`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+</tables>
+</canvas>
+</schemadesigner>
