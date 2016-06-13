@@ -51,15 +51,15 @@ CREATE TABLE `sbc_biodata_peserta` (
   `id_tingkat_sekolah_peserta` tinyint(2) DEFAULT NULL,
   `id_rayon_peserta` int(3) DEFAULT NULL,
   PRIMARY KEY (`id_peserta`),
-  KEY `FK_tingkat_sekoalh_peserta` (`id_tingkat_sekolah_peserta`),
   KEY `FK_rayon_peserta` (`id_rayon_peserta`),
-  CONSTRAINT `FK_rayon_peserta` FOREIGN KEY (`id_rayon_peserta`) REFERENCES `sbc_rayon` (`id_rayon`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `FK_tingkat_sekoalh_peserta` FOREIGN KEY (`id_tingkat_sekolah_peserta`) REFERENCES `sbc_tingkat_sekolah` (`id_tingkat_sekolah`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `FK_tingkat_sekoalh_peserta` (`id_tingkat_sekolah_peserta`),
+  CONSTRAINT `FK_rayon_peserta` FOREIGN KEY (`id_rayon_peserta`) REFERENCES `sbc_rayon` (`id_rayon`) ON UPDATE CASCADE,
+  CONSTRAINT `FK_tingkat_sekoalh_peserta` FOREIGN KEY (`id_tingkat_sekolah_peserta`) REFERENCES `sbc_tingkat_sekolah` (`id_tingkat_sekolah`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `sbc_biodata_peserta` */
 
-insert  into `sbc_biodata_peserta`(`id_peserta`,`nama_peserta`,`tempat_lahir_peserta`,`tanggal_lahir_peserta`,`email_peserta`,`alamat_peserta`,`nomor_telp_peserta`,`sekolah_peserta`,`password_peserta`,`foto_peserta`,`id_tingkat_sekolah_peserta`,`id_rayon_peserta`) values ('0101076','I Wayan Puguh Sudarma','Surabaya','0000-00-00','wayanpuguhsudarma@gm','Jln. Pulau Saelus I No. 1','085338106836','SMK TI Bali Global Denpas','628a98554d657ca8aa0577b07d56b602',NULL,3,1),('0101077','I Wayan Reroet Kupluk','Bali','0000-00-00','wayanpuguhsudarma@gm','Jln. rusak','0912498237','SMK Dija Kaden','628a98554d657ca8aa0577b07d56b602',NULL,1,1);
+insert  into `sbc_biodata_peserta`(`id_peserta`,`nama_peserta`,`tempat_lahir_peserta`,`tanggal_lahir_peserta`,`email_peserta`,`alamat_peserta`,`nomor_telp_peserta`,`sekolah_peserta`,`password_peserta`,`foto_peserta`,`id_tingkat_sekolah_peserta`,`id_rayon_peserta`) values ('01010001','I Wayan Puguh Sudarma','Surabaya','0000-00-00','wayanpuguhsudarma@gm','Jln. Pulau Saelus I No. 1','085338106836','SMK TI Bali Global Denpas','628a98554d657ca8aa0577b07d56b602',NULL,3,1),('01010002','I Wayan Reroet Kupluk','Bali','0000-00-00','wayanpuguhsudarma@gm','Jln. rusak','0912498237','SMK Dija Kaden','628a98554d657ca8aa0577b07d56b602',NULL,1,1);
 
 /*Table structure for table `sbc_jawaban` */
 
@@ -73,7 +73,7 @@ CREATE TABLE `sbc_jawaban` (
   `benar_jawaban` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id_jawaban`),
   KEY `FK_soal_jawaban` (`id_soal_jawaban`),
-  CONSTRAINT `FK_soal_jawaban` FOREIGN KEY (`id_soal_jawaban`) REFERENCES `sbc_soal` (`id_soal`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `FK_soal_jawaban` FOREIGN KEY (`id_soal_jawaban`) REFERENCES `sbc_soal` (`id_soal`) ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=latin1;
 
 /*Data for the table `sbc_jawaban` */
@@ -89,31 +89,15 @@ CREATE TABLE `sbc_jawaban_peserta_tmp` (
   `id_jawaban` int(11) DEFAULT NULL,
   `id_peserta` varchar(11) DEFAULT NULL,
   PRIMARY KEY (`id_jawaban_peserta_tmp`),
-  KEY `FK_jawaban_yang_didapat_peserta` (`id_jawaban`),
   KEY `FK_jawaban_peserta` (`id_peserta`),
-  CONSTRAINT `FK_jawaban_peserta` FOREIGN KEY (`id_peserta`) REFERENCES `sbc_lomba_peserta` (`id_peserta`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `FK_jawaban_yang_didapat_peserta` FOREIGN KEY (`id_jawaban`) REFERENCES `sbc_jawaban` (`id_jawaban`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `FK_jawaban_yang_didapat_peserta` (`id_jawaban`),
+  CONSTRAINT `FK_jawaban_peserta` FOREIGN KEY (`id_peserta`) REFERENCES `sbc_lomba_peserta` (`id_peserta`) ON UPDATE CASCADE,
+  CONSTRAINT `FK_jawaban_yang_didapat_peserta` FOREIGN KEY (`id_jawaban`) REFERENCES `sbc_jawaban` (`id_jawaban`) ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
 
 /*Data for the table `sbc_jawaban_peserta_tmp` */
 
-insert  into `sbc_jawaban_peserta_tmp`(`id_jawaban_peserta_tmp`,`id_jawaban`,`id_peserta`) values (1,10,'0101077'),(2,13,'0101077'),(3,6,'0101077'),(4,12,'0101077'),(5,20,'0101077'),(6,4,'0101077'),(7,16,'0101077'),(8,9,'0101077'),(9,14,'0101077'),(10,18,'0101077'),(11,2,'0101077'),(12,5,'0101077'),(13,11,'0101077'),(14,19,'0101077'),(15,17,'0101077'),(16,15,'0101077'),(17,1,'0101077'),(18,7,'0101077'),(19,21,'0101077'),(20,3,'0101077');
-
-/*Table structure for table `sbc_log_aktivitas` */
-
-DROP TABLE IF EXISTS `sbc_log_aktivitas`;
-
-CREATE TABLE `sbc_log_aktivitas` (
-  `id_aktivitas` int(11) NOT NULL AUTO_INCREMENT,
-  `id_admin_aktivitas` tinyint(2) DEFAULT NULL,
-  `nama_aktivitas` varchar(100) DEFAULT NULL,
-  `time_aktivitas` datetime DEFAULT NULL,
-  PRIMARY KEY (`id_aktivitas`),
-  KEY `FK_aktivitas_admin` (`id_admin_aktivitas`),
-  CONSTRAINT `FK_aktivitas_admin` FOREIGN KEY (`id_admin_aktivitas`) REFERENCES `sbc_admin` (`id_admin`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-/*Data for the table `sbc_log_aktivitas` */
+insert  into `sbc_jawaban_peserta_tmp`(`id_jawaban_peserta_tmp`,`id_jawaban`,`id_peserta`) values (1,10,'01010002'),(2,13,'01010002'),(3,6,'01010002'),(4,12,'01010002'),(5,20,'01010002'),(6,4,'01010002'),(7,16,'01010002'),(8,9,'01010002'),(9,14,'01010002'),(10,18,'01010002'),(11,2,'01010002'),(12,5,'01010002'),(13,11,'01010002'),(14,19,'01010002'),(15,17,'01010002'),(16,15,'01010002'),(17,1,'01010002'),(18,7,'01010002'),(19,21,'01010002'),(20,3,'01010002');
 
 /*Table structure for table `sbc_lomba_peserta` */
 
@@ -131,12 +115,12 @@ CREATE TABLE `sbc_lomba_peserta` (
   `jumlah_salah_jawab_peserta` int(3) DEFAULT NULL,
   `jumlah_tidak_jawab_peserta` int(3) DEFAULT NULL,
   PRIMARY KEY (`id_peserta`),
-  CONSTRAINT `FK_sbc_lomba_peserta` FOREIGN KEY (`id_peserta`) REFERENCES `sbc_biodata_peserta` (`id_peserta`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `FK_sbc_lomba_peserta` FOREIGN KEY (`id_peserta`) REFERENCES `sbc_biodata_peserta` (`id_peserta`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `sbc_lomba_peserta` */
 
-insert  into `sbc_lomba_peserta`(`id_peserta`,`verifikasi_peserta`,`ikuti_lomba_peserta`,`berkas_struk_pembayaran_peserta`,`berkas_biodata_ttd_peserta`,`waktu_mulai_peserta`,`waktu_selesai_peserta`,`jumlah_benar_jawab_peserta`,`jumlah_salah_jawab_peserta`,`jumlah_tidak_jawab_peserta`) values ('0101076',0,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL),('0101077',1,1,NULL,NULL,'2016-06-05 23:55:30','2016-06-06 01:55:31',2,2,1);
+insert  into `sbc_lomba_peserta`(`id_peserta`,`verifikasi_peserta`,`ikuti_lomba_peserta`,`berkas_struk_pembayaran_peserta`,`berkas_biodata_ttd_peserta`,`waktu_mulai_peserta`,`waktu_selesai_peserta`,`jumlah_benar_jawab_peserta`,`jumlah_salah_jawab_peserta`,`jumlah_tidak_jawab_peserta`) values ('01010001',0,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL),('01010002',1,1,NULL,NULL,'2016-06-05 23:55:30','2016-06-06 01:55:31',2,2,1);
 
 /*Table structure for table `sbc_pengumuman` */
 
@@ -150,7 +134,7 @@ CREATE TABLE `sbc_pengumuman` (
   `time_created` datetime DEFAULT NULL,
   PRIMARY KEY (`id_pengumuman`),
   KEY `FK_pengumuman_admin` (`id_admin`),
-  CONSTRAINT `FK_pengumuman_admin` FOREIGN KEY (`id_admin`) REFERENCES `sbc_admin` (`id_admin`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `FK_pengumuman_admin` FOREIGN KEY (`id_admin`) REFERENCES `sbc_admin` (`id_admin`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `sbc_pengumuman` */
@@ -197,7 +181,7 @@ CREATE TABLE `sbc_soal` (
   `id_tingkat_sekolah_soal` tinyint(2) DEFAULT NULL,
   PRIMARY KEY (`id_soal`),
   KEY `FK_tingkatan_sekolah_soal` (`id_tingkat_sekolah_soal`),
-  CONSTRAINT `FK_tingkatan_sekolah_soal` FOREIGN KEY (`id_tingkat_sekolah_soal`) REFERENCES `sbc_tingkat_sekolah` (`id_tingkat_sekolah`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `FK_tingkatan_sekolah_soal` FOREIGN KEY (`id_tingkat_sekolah_soal`) REFERENCES `sbc_tingkat_sekolah` (`id_tingkat_sekolah`) ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 
 /*Data for the table `sbc_soal` */
@@ -214,15 +198,15 @@ CREATE TABLE `sbc_soal_peserta_tmp` (
   `id_peserta` varchar(11) DEFAULT NULL,
   `jawaban_peserta` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_soal_peserta_tmp`),
-  KEY `FK_soal_yang_didapat_peserta` (`id_soal`),
   KEY `FK_soal_peserta` (`id_peserta`),
-  CONSTRAINT `FK_soal_peserta` FOREIGN KEY (`id_peserta`) REFERENCES `sbc_lomba_peserta` (`id_peserta`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `FK_soal_yang_didapat_peserta` FOREIGN KEY (`id_soal`) REFERENCES `sbc_soal` (`id_soal`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `FK_soal_yang_didapat_peserta` (`id_soal`),
+  CONSTRAINT `FK_soal_peserta` FOREIGN KEY (`id_peserta`) REFERENCES `sbc_lomba_peserta` (`id_peserta`) ON UPDATE CASCADE,
+  CONSTRAINT `FK_soal_yang_didapat_peserta` FOREIGN KEY (`id_soal`) REFERENCES `sbc_soal` (`id_soal`) ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 /*Data for the table `sbc_soal_peserta_tmp` */
 
-insert  into `sbc_soal_peserta_tmp`(`id_soal_peserta_tmp`,`id_soal`,`id_peserta`,`jawaban_peserta`) values (1,4,'0101077',0),(2,1,'0101077',11),(3,3,'0101077',1),(4,5,'0101077',14),(5,2,'0101077',18);
+insert  into `sbc_soal_peserta_tmp`(`id_soal_peserta_tmp`,`id_soal`,`id_peserta`,`jawaban_peserta`) values (1,4,'01010002',0),(2,1,'01010002',11),(3,3,'01010002',1),(4,5,'01010002',14),(5,2,'01010002',18);
 
 /*Table structure for table `sbc_tingkat_sekolah` */
 
@@ -237,6 +221,24 @@ CREATE TABLE `sbc_tingkat_sekolah` (
 /*Data for the table `sbc_tingkat_sekolah` */
 
 insert  into `sbc_tingkat_sekolah`(`id_tingkat_sekolah`,`nama_tingkat_sekolah`) values (1,'SD'),(2,'SMP'),(3,'SMA/SMK');
+
+/* Procedure structure for procedure `last_id_peserta` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `last_id_peserta` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `last_id_peserta`()
+BEGIN
+SELECT	id_peserta,
+	SUBSTRING(id_peserta, 1, 2)*1 AS tingkat_sekolah,
+	SUBSTRING(id_peserta, 3, 2)*1 AS rayon,
+	SUBSTRING(id_peserta, -4)*1 AS id
+FROM sbc_biodata_peserta
+ORDER BY id DESC
+LIMIT 1;
+    END */$$
+DELIMITER ;
 
 /*Table structure for table `all_data_peserta` */
 
