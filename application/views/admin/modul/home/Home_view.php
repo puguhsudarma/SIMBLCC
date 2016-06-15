@@ -4,7 +4,7 @@
     <section class="content-header">
         <h1>
             Home Administrator
-            <small>Ini adalah halaman utama dashboard administrator back end SIM BLCC</small>
+            <small>Halaman utama dashboard administrator back end SIM BLCC</small>
         </h1>
     </section>
 
@@ -14,8 +14,7 @@
         <div class="jumbotron">
             <h1>Hello, World</h1>
             <p>
-                Ini adalah halaman konten, yang akan berubah secara dinamis dengan kekuatan<br />
-                PHP, JS, AJAX, DLL.
+                Selamat datang pada halaman administrator back end SIM BLCC.
             </p>
         </div>
     </section><!-- /.content -->

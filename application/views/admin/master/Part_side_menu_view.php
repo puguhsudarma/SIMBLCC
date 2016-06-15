@@ -19,7 +19,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <li><a href="#">Data Pengumuman</a></li>
                 </ul>
             </li>
-            <li><a href="#"><i class="fa fa-link"></i> <span>Setting SIM BLCC</span></a></li>
+            <li><a href="<?php echo site_url('admin/Setting'); ?>"><i class="fa fa-link"></i> <span>Setting SIM BLCC</span></a></li>
             <li><a href="#"><i class="fa fa-link"></i> <span>Laporan Data</span></a></li>
         </ul><!-- /.sidebar-menu -->
     </section>

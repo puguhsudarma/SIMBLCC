@@ -47,7 +47,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div><!-- ./wrapper -->
 
         <!-- REQUIRED JS SCRIPTS -->
-        <script src="<?php echo base_url('assets/js/jquery-1.11.1/jquery.min.js'); ?>"></script>
+        <script src="<?php echo base_url('assets/js/jquery/jQuery-2.2.0.min.js'); ?>"></script>
         <script src="<?php echo base_url('assets/css/bootstrap-3.3.2/js/bootstrap.min.js'); ?>"></script>
         <script src="<?php echo base_url('assets/css/bootstrap-datepicker/js/bootstrap-datepicker.js'); ?>"></script>
         <script src="<?php echo base_url('assets/js/adminLTE/app.min.js'); ?>"></script>
