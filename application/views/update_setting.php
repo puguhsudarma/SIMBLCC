@@ -12,7 +12,7 @@
       <form method="post" action="update_setting_c/update_data" class="form-horizontal">
 
         <?php
-        $nama = array('0' => "waktu lomba mulai", '1' => "waktu lomba selesai", '2' => "banyak soal SMA", '3' => "banyak soal SMP", '4' => "banyak soal SD", '5' => "waktu lomba", '6' => "header web", '7' => "tema web", '8' => "nilai benar", '9' => "nilai salah", '10' => "nilai tidak jawab");
+          $nama = array('0' => "waktu lomba mulai", '1' => "waktu lomba selesai", '2' => "banyak soal SMA", '3' => "banyak soal SMP", '4' => "banyak soal SD", '5' => "waktu lomba", '6' => "header web", '7' => "tema web", '8' => "nilai benar", '9' => "nilai salah", '10' => "nilai tidak jawab");
 
         $i=-1;
         foreach ($lanjut as $row )
@@ -23,7 +23,7 @@
           <div class='form-group'>
             <label class='control-label col-md-3' for='email'>".$nama[$i].":</label>
             <div class='col-sm-9'>
-              <input type='text' class='form-control' placeholder='Masukkan data' value='".$row['value_setting']."' name='".$row['attr_setting']."'>
+              <input type='text' class='form-control' placeholder='Masukkan data' value='".$row['value_setting']."'  name='".$row['attr_setting']."'>
             </div>
           </div>
           ";
